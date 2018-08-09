@@ -1,0 +1,76 @@
+
+<form novalidate [formGroup]="form" (ngSubmit)="addUser()">
+<h3>Reactive Form</h3>
+	<div class="form-group">
+		<label for="name">
+			Name:
+		</label>
+		<input 
+		type="text"
+		class="form-control"
+		formControlName="name" 
+		>
+	</div>
+	<div *ngIf="form.get('name').touched  && form.get('name').invalid" class="alert alert-danger">
+		<div *ngIf="form.get('name').hasError('required')">
+  			Name is Required!
+  		</div>
+  		<div *ngIf="form.get('name').hasError('pattern')">
+  			Invalid Name!
+  		</div>
+  		
+  	</div>
+
+	<div class="form-group">
+		<label for="contact">
+			Contact:
+		</label>
+		<input 
+		type="text"
+		class="form-control"
+		formControlName="contact" 
+		>
+	</div>
+	<div *ngIf="form.get('contact').touched  && form.get('contact').invalid" class="alert alert-danger">
+		<div *ngIf="form.get('contact').hasError('required')">
+  			Contact is Required!
+  		</div>
+  		<div *ngIf="form.get('contact').hasError('pattern')">
+  			Invalid Contact!
+  		</div>
+  		<div *ngIf="form.get('contact').hasError('minlength') && !form.get('contact').hasError('pattern')">
+  			Less than 10 digits!
+  		</div>
+  		<div *ngIf="form.get('contact').hasError('maxlength') && !form.get('contact').hasError('pattern')">
+  			More than 10 digits!
+  		</div>
+  		
+  	</div>
+
+	<div class="form-group">
+		<label for="email">
+			Email:
+		</label>
+		<input 
+		type="text"
+		class="form-control"
+		formControlName="email" 
+		>
+	</div>
+	<div *ngIf="form.get('email').touched && form.get('email').invalid" class="alert alert-danger">
+  		<div *ngIf="form.get('email').hasError('required')">
+  			Email is Required!
+  		</div>
+  		<div *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
+  			Invalid Email!
+  		</div>
+  		
+  	</div>
+	<button type="submit" class="btn btn-success" [disabled]="form.invalid">Add User</button>
+</form>
+<hr>
+<ul class="list-group">
+	<li *ngFor="let user of userData" class="list-group-item">
+		{{user.name}}
+	</li>
+</ul>

@@ -1,0 +1,79 @@
+
+<div class="container">
+  <div class="jumbotron">
+    <form #frm="ngForm" (ngSubmit)="addUser(frm)">
+    <h3>Template Drivan Form</h3>
+      <div class="form-group">
+      	<label for="name">Name:</label>
+      	<input 
+      	type="text" 
+      	class="form-control" 
+      	name="name" 
+      	ngModel 
+      	#nameUser = 'ngModel'
+      	required
+      	pattern='[a-zA-Z][a-zA-Z ]+'
+      	>
+      </div>
+      <div *ngIf="nameUser?.touched  && nameUser?.invalid" class="alert alert-danger">
+      	<div *ngIf="nameUser.errors?.required">
+      		Name is Required!
+      	</div>
+      	<div *ngIf="nameUser.errors?.pattern">
+      		Name is Invalid!
+      	</div>
+      </div>
+      <div class="form-group">
+      	<label for="contact">Contact(Mobile No.) :</label>
+      	<input 
+      	type="text" 
+      	class="form-control" 
+      	name="contact" 
+      	ngModel 
+      	#contactUser = 'ngModel'
+      	required
+      	maxlength="10" 
+      	minlength="10"
+      	pattern='[0-9]*'
+      	>
+      </div>
+      <div *ngIf="contactUser?.touched && contactUser?.invalid" class="alert alert-danger">
+	      <div *ngIf="contactUser.errors?.required">
+	      	Contact is Required!
+	      </div>
+	      <div [hidden]="!contactUser?.hasError('minlength')">
+      		Contact is Invalid!
+      	</div>
+	   </div>
+      <div class="form-group">
+      	<label for="email">Email:</label>
+      	<input 
+      	type="text" 
+      	class="form-control" 
+      	name="email" 
+      	ngModel 
+      	#emailUser = 'ngModel'
+      	required
+      	pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'
+      	>
+      </div>
+      <div *ngIf="emailUser?.touched && emailUser?.invalid" class="alert alert-danger">
+	      <div *ngIf="emailUser.errors?.required">
+	      	Email is Required!
+	      </div>
+	      <div *ngIf="emailUser.errors?.pattern">
+      		Email is Invalid!
+      	</div>
+	   </div>
+      <button type="submit" class="btn btn-success" [disabled]='frm.invalid'>Add User</button>
+    </form>
+  </div>
+</div>
+
+<ul class="list-group">
+	<li *ngFor="let user of userData" class="list-group-item">
+		{{user.name}}
+	</li>
+</ul>
+<br><hr>
+{{frm.value | json}}
